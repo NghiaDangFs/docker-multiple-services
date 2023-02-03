@@ -1,0 +1,16 @@
+sudo: required
+services: 
+  - docker
+
+before_install:
+  - docker build - t nghiadangfs/react-test -f ./client/Dockerfile.dev ./client
+
+script: 
+  - docker run -e CI=true nghiadangfs/react-test npm test -- --coverage
+
+after_success:
+  - docker build -t nghiadangfs/multi-client ./client
+  - docker build -t nghiadangfs/multi-nginx ./nginx
+  - docker build -t nghiadangfs/multi-server ./server
+  - docker build -t nghiadangfs/multi-worker ./worker
+

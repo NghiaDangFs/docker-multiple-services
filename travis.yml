@@ -13,4 +13,11 @@ after_success:
   - docker build -t nghiadangfs/multi-nginx ./nginx
   - docker build -t nghiadangfs/multi-server ./server
   - docker build -t nghiadangfs/multi-worker ./worker
+  # Login to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker  login -u "$DOCKER_ID" --password-stdin
+  # Take those images and push them to docker hub
+  - docker push nghiadangfs/multi-client
+  - docker push nghiadangfs/multi-nginx
+  - docker push nghiadangfs/multi-server
+  - docker push nghiadangfs/multi-worker
 
